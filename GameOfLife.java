@@ -1,17 +1,18 @@
-/**
- * Hovedprogram
- */
 public class GameOfLife {
 
     public static void main(String[] args) {
         System.out.println("Game of life");
-        Spillbrett brett = new Spillbrett(10, 10);
+        Spillbrett brett = new Spillbrett(12, 10);
 
-        System.out.println(brett);
+        brett.hentBrett()[0][1].start();
+        brett.hentBrett()[1][2].start();
+        brett.hentBrett()[2][0].start();
+        brett.hentBrett()[2][1].start();
+        brett.hentBrett()[2][2].start();
 
-        Rute testRute = brett.hentBrett()[1][1];
-        for (Rute r : testRute.hentNaboer()) {
-            System.out.println(r.toString());
+        for (int i = 0; i < 20; i++) {
+            System.out.println(brett);
+            brett.oppdater();
         }
     }
     

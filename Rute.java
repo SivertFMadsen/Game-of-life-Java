@@ -17,36 +17,56 @@ public class Rute {
         return lever;
     }
 
+    public void bliLevende() {
+        lever = true;
+    }
+
+    public void bliDoe() {
+        lever = false;
+    }
+
     public ArrayList<Rute> hentNaboer() {
 
         ArrayList<Rute> naboer = new ArrayList<>();
         Rute[][] verden = brett.hentBrett();
 
-        if (x != 0) {
-            naboer.add(verden[x - 1][y]);
-        }
+        for (int i = (x > 0 ? -1 : 0); i < (x < brett.hentHoeyde() - 1 ? 2 : 1); i++) {
+            for (int j = (y > 0 ? -1 : 0); j < (y < brett.hentBredde() - 1 ? 2 : 1); j++) {
 
-        if (x != brett.hentBredde() - 1) {
-            naboer.add(verden[x + 1][y]);
+                if (!(i == 0 && j == 0)) {
+                    naboer.add(verden[x + i][y + j]);
+                }
+            }
         }
-
-        if (y != 0) {
-            naboer.add(verden[x][y - 1]);
-        }
-
-        if (y != brett.hentHoyde() - 1) {
-            naboer.add(verden[x][y + 1]);
-        }
-
         return naboer;
     }
 
+    public boolean skalLeve() {
+        int antLevende = 0;
+        for (Rute nabo : this.hentNaboer()) {
+            if (nabo.lever()) {
+                antLevende++;
+            }
+        }
+
+        if (lever && (antLevende < 2 || antLevende > 3)) {
+            return false;
+        } else if ((!lever) && antLevende == 3) {
+            return true;
+        }
+
+        return lever;
+    }
+
+    public void start() {
+        lever = true;
+    }
 
     @Override
     public String toString() {
-        // return lever ? "1" : "0";
+        return lever ? "|1|" : "|0|";
 
         // midlertidig:
-        return "X: " + x + " Y: " + y;
+        // return "|X: " + x + " Y: " + y + "|";
     }
 }
